@@ -12,7 +12,7 @@ def initialize_gemini(api_key: str):
 # Function to generate the prompt using code2prompt
 def generate_prompt(repo_folder: str, output_path: str):
     """Use code2prompt to generate a prompt from the repository's code."""
-    code2prompt_command = f"code2prompt --path {repo_folder} --suppress-comments --exclude \"**/.git/**,**/.vscode/**,**/.idea/**,**/node_modules/**,**/dist/**,**/*.gitignore,**/*.scss,**/*.css,**/yarn.lock,**/package-lock.json,**/*.json,*.json\" --template ./template.j2 --output {output_path}"
+    code2prompt_command = f"code2prompt --path {repo_folder} --suppress-comments --exclude \"**/.git/**,**/.vscode/**,**/.idea/**,**/node_modules/**,**/dist/**,**/*.gitignore,**/*.scss,**/*.css,**/yarn.lock,**/package-lock.json,**/*.json,*.json\" --template ./mermaid.j2 --output {output_path}"
     subprocess.run(code2prompt_command, shell=True, check=True)
 
 def generate_mermaid_diagram(prompt_path: str, api_key: str, output_path: str):
