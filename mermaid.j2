@@ -1,0 +1,50 @@
+### **Template Breakdown**:
+
+1. **File Summary Section**:
+   - For each file, it outputs:
+     - Path of the file.
+     - Programming language.
+     - File size.
+     - Last modified timestamp.
+     - A portion of the file content (truncated to 1000 characters to keep it concise).
+   
+2. **Key Components Section**:
+   - For each file, lists out the main functions and classes.
+   - Descriptions of major functions or classes and their responsibilities.
+   
+3. **File Relationships Section**:
+   - Highlights relationships between different files, functions, and classes. This is important for the AI to understand how files interact, which is necessary for generating a proper diagram.
+   
+4. **Mermaid Diagram Requests**:
+   - Provides specific instructions for generating different types of diagrams:
+     - Class Diagrams
+     - Sequence Diagrams
+     - Flowcharts
+   
+5. **Focus Areas**:
+   - Specifies key focus areas for the AI model to concentrate on when generating the diagram, such as relationships, function calls, and data flow.
+
+
+## The codebase:
+
+<codebase>
+
+<toc>
+## Table of Contents
+
+{% for file in files %}{{ file.path }}
+{% endfor %}
+</toc>
+
+<code>
+{% for file in files %}
+## {{ file.path }}
+
+```{{ file.language }}
+{{ file.content }}
+```
+
+{% endfor %}
+</code>
+
+</codebase>
