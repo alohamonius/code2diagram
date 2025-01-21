@@ -22,7 +22,7 @@ if __name__ == "__main__":
     clone_repository(github_url, folder_path)
     generate_prompt(folder_path,prompt_path,exclude_patterns)
 
-    for attempt in range(1, max_attempts + 1):
+    for attempt in range(1, int(max_attempts )+ 1):
         try:
             # print(attempt)
             mermaid_output_path = f"output/system_diagram{attempt}.mmd"
