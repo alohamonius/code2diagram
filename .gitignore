@@ -1,0 +1,4 @@
+output/*
+repo
+.vscode
+__pycache__/*

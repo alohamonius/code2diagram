@@ -1,75 +1,112 @@
-Codebase Architecture Diagram Generator
-Using the codebase information below, generate a comprehensive Mermaid diagram that visualizes:
+### High-Level Architecture Analysis Prompt ###
 
-1.File structure hierarchy
-2.Dependencies between components
-3.Key relationships and data flow
-4.Module interactions
-5.External dependencies
+Based on the codebase analysis, create a Mermaid diagram that represents the system's high-level architecture. Focus on:
 
-The diagram should:
+1. Core Business Domains
+- Identify main business capabilities
+- Group related functionality
+- Highlight domain boundaries
 
-1.Group related components using subgraphs
-2.Use meaningful icons/shapes to distinguish different types of files/components
-3.Include color coding for different layers/types of components
-4.Show directional relationships with appropriate arrows
-5.Highlight critical paths and core dependencies
-6.Include a legend explaining the diagram notation
+2. Architectural Layers
+- Frontend/UI components
+- Business logic/Services
+- Data access/Storage
+- Infrastructure components
 
-Required diagram elements:
+3. Key Integration Points
+- External system dependencies
+- APIs and interfaces
+- Message queues/Event buses
+- Third-party services
 
-1.Files should be represented as rectangles
-2.Directories as folders
-3.Dependencies as arrows with different styles (solid for direct, dashed for indirect)
-4.External dependencies in a separate subgraph
-5.Core business logic components highlighted
-6.Infrastructure and utility components in separate groups
-7.Testing files in a dedicated section
+4. Cross-Cutting Concerns
+- Authentication/Authorization
+- Logging/Monitoring
+- Configuration management
+- Common utilities
 
-Example structure (to be replaced with actual diagram):
-graph TD
-    %% Style definitions
-    classDef core fill:#f9f,stroke:#333,stroke-width:2px
-    classDef util fill:#bbf,stroke:#333,stroke-width:1px
-    classDef test fill:#bfb,stroke:#333,stroke-width:1px
+External & Cloud Infrastructure
 
-    %% Main application structure
-    subgraph MainApp[Main Application]
-        direction TB
-        A[Entry Point] --> B[Core Module]
-        B --> C[Services]
-        B --> D[Models]
+5. Cloud provider services (AWS/Azure/GCP)
+- SaaS integrations
+- Managed services
+- Service mesh/connectivity
+- Containerization platforms
+- Scalability components
+
+
+Group CloudProvider services in one block.
+### Diagram Requirements ###
+
+Generate a Mermaid diagram using this structure:
+
+```mermaid
+graph TB
+    %% Subgraph for Core Business Domain
+    subgraph CoreDomain[Core Business Domain]
+        Core1[Domain Service 1]
+        Core2[Domain Service 2]
     end
-
-    %% External Dependencies
-    subgraph External[External Dependencies]
-        E[Dependency 1]
-        F[Dependency 2]
+    
+    %% Subgraph for Infrastructure
+    subgraph Infrastructure[Infrastructure Layer]
+        Infra1[Database]
+        Infra2[Caching]
+        Infra3[Message Queue]
     end
-
-    %% Infrastructure
-    subgraph Infra[Infrastructure]
-        G[Config]
-        H[Utils]
+    
+    %% Subgraph for External Systems
+    subgraph External[External Systems]
+        Ext1[Third Party API]
+        Ext2[External Service]
     end
+    
+    %% Cross-cutting concerns
+    subgraph Utilities[Cross-Cutting Concerns]
+        Util1[Logging]
+        Util2[Authentication]
+    end
+    
+    %% Relationships
+    Core1 --> Core2
+    Core2 --> Infra1
+    Core2 --> Infra2
+    Core1 --> Ext1
+    Util2 -.-> Core1
+    Util2 -.-> Core2
+    Util1 -.-> Core1
+    Util1 -.-> Core2
+```
 
-    %% Connect components
-    A --> E
-    B --> F
-    C --> G
-    D --> H
+### Analysis Instructions ###
 
-    %% Apply styles
-    class B,C,D core
-    class G,H util
+1. Component Identification:
+   - Extract key namespaces/packages
+   - Identify primary services/modules
+   - Map external dependencies
+   - Note cross-cutting concerns
 
-Legend:
+2. Relationship Analysis:
+   - Map direct dependencies (solid lines)
+   - Identify indirect dependencies (dashed lines)
+   - Note data flow directions
+   - Highlight critical paths
 
-🔷 Core Components
-🔶 Infrastructure
-🔸 External Dependencies
-➡️ Direct Dependencies
-⤏ Indirect Dependencies
+3. Grouping Guidelines:
+   - Group by business capability
+   - Separate infrastructure concerns
+   - Isolate external integrations
+   - Cluster related utilities
+
+4. Style Conventions:
+   - Core business logic: Pink fill
+   - Infrastructure: Light blue fill
+   - External systems: Light green fill
+   - Utilities: Light yellow fill
+   - Use double borders for critical components
+   - Dashed lines for loose coupling
+   - Solid lines for direct dependencies
+
 
 Note: The above example structure should be automatically replaced with an actual diagram based on the codebase analysis below.
 

@@ -3,20 +3,37 @@ import json
 import requests
 from pathlib import Path
 
-def mermaid_to_image(mermaid_text, output_path, img_format='png'):
+def mermaid_to_image(mermaid_text, output_path, width=900, height=900, img_format='png'):
     """
     Convert Mermaid diagram text to an image using Mermaid's online render service.
     
     Args:
         mermaid_text (str): The Mermaid diagram definition
         output_path (str): Path where the image should be saved
+        width (int): Desired image width in pixels
+        height (int): Desired image height in pixels
         img_format (str): Output format - 'png' or 'svg'
     """
-    # Encode the Mermaid text to base64
-    encoded_text = base64.b64encode(mermaid_text.encode('utf-8')).decode('utf-8')
+    # Create config with size settings
+
+
+
+
+    mermaid_config = {
+        "code": mermaid_text,
+        "mermaid": {
+            "theme": "default",
+            "width": width,
+            "height": height
+        }
+    }
     
-    # Create the API URL with the encoded text
-    img_url = f'https://mermaid.ink/img/{encoded_text}'
+    # Convert config to JSON and encode
+    json_str = json.dumps(mermaid_config)
+    encoded_config = base64.b64encode(json_str.encode('utf-8')).decode('utf-8')
+    
+    # Create the API URL with the encoded config
+    img_url = f'https://mermaid.ink/img/{encoded_config}'
     
     # Download the image
     response = requests.get(img_url)
@@ -25,7 +42,7 @@ def mermaid_to_image(mermaid_text, output_path, img_format='png'):
         # Save the image
         with open(output_path, 'wb') as f:
             f.write(response.content)
-        print(f"Image saved successfully to {output_path}")
+        print(f"Image saved successfully to {output_path} ({width}x{height})")
     else:
         print(f"Error: Could not generate image. Status code: {response.status_code}")
 
@@ -56,20 +73,9 @@ def extract_mermaid_from_markdown(markdown_path):
     if end_idx == -1:
         raise ValueError("Mermaid diagram not properly closed in markdown file")
         
-    return content[start_idx:end_idx].strip()
-
-# Example usage
-if __name__ == "__main__":
-    # Path to your res.md file
-    markdown_path = "res.md"
+    mermaid_code = content[start_idx:end_idx].strip()
     
-    try:
-        # Extract Mermaid diagram from markdown
-        mermaid_code = extract_mermaid_from_markdown(markdown_path)
-        
-        # Convert to image
-        output_path = "codebase_diagram.png"  # or .svg for SVG format
-        mermaid_to_image(mermaid_code, output_path)
-        
-    except Exception as e:
-        print(f"Error: {str(e)}")
+    # Remove '(' and ')'
+    cleaned_mermaid_code = mermaid_code.replace('(', '').replace(')', '')
+    
+    return cleaned_mermaid_code
