@@ -17,7 +17,7 @@ if __name__ == "__main__":
     exclude_patterns = (
     ".dockerignore,.eslintrc,*.md,**/.git/**,**/.vscode/**,**/.idea/**,"
     "**/node_modules/**,**/dist/**,**/*.gitignore,**/*.scss,**/*.css,"
-    "**/yarn.lock,**/package-lock.json,**/*.json,*.json"
+    "**/yarn.lock,**/package-lock.json,**/*.json,*.json,*.env"
     )
     
     if not os.path.exists("output"):
