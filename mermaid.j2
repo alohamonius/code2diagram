@@ -1,29 +1,77 @@
-### **Template Breakdown**:
+Codebase Architecture Diagram Generator
+Using the codebase information below, generate a comprehensive Mermaid diagram that visualizes:
 
-1. **File Summary Section**:
-   - For each file, it outputs:
-     - Path of the file.
-     - Programming language.
-     - File size.
-     - Last modified timestamp.
-     - A portion of the file content (truncated to 1000 characters to keep it concise).
-   
-2. **Key Components Section**:
-   - For each file, lists out the main functions and classes.
-   - Descriptions of major functions or classes and their responsibilities.
-   
-3. **File Relationships Section**:
-   - Highlights relationships between different files, functions, and classes. This is important for the AI to understand how files interact, which is necessary for generating a proper diagram.
-   
-4. **Mermaid Diagram Requests**:
-   - Provides specific instructions for generating different types of diagrams:
-     - Class Diagrams
-     - Sequence Diagrams
-     - Flowcharts
-   
-5. **Focus Areas**:
-   - Specifies key focus areas for the AI model to concentrate on when generating the diagram, such as relationships, function calls, and data flow.
+1.File structure hierarchy
+2.Dependencies between components
+3.Key relationships and data flow
+4.Module interactions
+5.External dependencies
 
+The diagram should:
+
+1.Group related components using subgraphs
+2.Use meaningful icons/shapes to distinguish different types of files/components
+3.Include color coding for different layers/types of components
+4.Show directional relationships with appropriate arrows
+5.Highlight critical paths and core dependencies
+6.Include a legend explaining the diagram notation
+
+Required diagram elements:
+
+1.Files should be represented as rectangles
+2.Directories as folders
+3.Dependencies as arrows with different styles (solid for direct, dashed for indirect)
+4.External dependencies in a separate subgraph
+5.Core business logic components highlighted
+6.Infrastructure and utility components in separate groups
+7.Testing files in a dedicated section
+
+Example structure (to be replaced with actual diagram):
+graph TD
+    %% Style definitions
+    classDef core fill:#f9f,stroke:#333,stroke-width:2px
+    classDef util fill:#bbf,stroke:#333,stroke-width:1px
+    classDef test fill:#bfb,stroke:#333,stroke-width:1px
+
+    %% Main application structure
+    subgraph MainApp[Main Application]
+        direction TB
+        A[Entry Point] --> B[Core Module]
+        B --> C[Services]
+        B --> D[Models]
+    end
+
+    %% External Dependencies
+    subgraph External[External Dependencies]
+        E[Dependency 1]
+        F[Dependency 2]
+    end
+
+    %% Infrastructure
+    subgraph Infra[Infrastructure]
+        G[Config]
+        H[Utils]
+    end
+
+    %% Connect components
+    A --> E
+    B --> F
+    C --> G
+    D --> H
+
+    %% Apply styles
+    class B,C,D core
+    class G,H util
+
+Legend:
+
+🔷 Core Components
+🔶 Infrastructure
+🔸 External Dependencies
+➡️ Direct Dependencies
+⤏ Indirect Dependencies
+
+Note: The above example structure should be automatically replaced with an actual diagram based on the codebase analysis below.
 
 ## The codebase:
 

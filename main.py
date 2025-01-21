@@ -3,6 +3,7 @@ import git
 from github import Github
 import subprocess
 import google.generativeai as genai
+from toImage import extract_mermaid_from_markdown, mermaid_to_image
 
 
 def initialize_gemini(api_key: str):
@@ -12,7 +13,7 @@ def initialize_gemini(api_key: str):
 # Function to generate the prompt using code2prompt
 def generate_prompt(repo_folder: str, output_path: str):
     """Use code2prompt to generate a prompt from the repository's code."""
-    code2prompt_command = f"code2prompt --path {repo_folder} --suppress-comments --exclude \"**/.git/**,**/.vscode/**,**/.idea/**,**/node_modules/**,**/dist/**,**/*.gitignore,**/*.scss,**/*.css,**/yarn.lock,**/package-lock.json,**/*.json,*.json\" --template ./mermaid.j2 --output {output_path}"
+    code2prompt_command = f"code2prompt --path {repo_folder} --suppress-comments --exclude \"**/.git/**,**/.vscode/**,**/.idea/**,**/node_modules/**,**/dist/**,**/*.gitignore,**/*.scss,**/*.css,**/yarn.lock,**/package-lock.json,**/*.json,*.json\" --template ./mermaid2.j2 --output {prompt_path}"
     subprocess.run(code2prompt_command, shell=True, check=True)
 
 def generate_mermaid_diagram(prompt_path: str, api_key: str, output_path: str):
@@ -52,12 +53,31 @@ def generate_mermaid_diagram(prompt_path: str, api_key: str, output_path: str):
         print(f"Error generating Mermaid diagram: {e}")
         return None
 
-# Function to clone the GitHub repository
+def remove_folder(folder_path: str):
+    """Remove a folder and its contents recursively."""
+    for root, dirs, files in os.walk(folder_path, topdown=False):
+        # Remove all files first
+        for name in files:
+            os.remove(os.path.join(root, name))
+        # Then remove all directories
+        for name in dirs:
+            os.rmdir(os.path.join(root, name))
+    os.rmdir(folder_path)  # Remove the empty folder itself
+
 def clone_repository(github_url: str, folder_path: str):
-    """Clone the GitHub repository to a local folder."""
+    """Clone the GitHub repository to a local folder, removing the folder if it already exists."""
     print(f"Cloning repository from {github_url}...")
-    if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
+    
+    # Check if the folder already exists
+    if os.path.exists(folder_path):
+        # Remove the existing folder and its contents
+        print(f"Folder {folder_path} already exists. Removing it...")
+        remove_folder(folder_path)
+    
+    # Create the folder if it doesn't exist
+    os.makedirs(folder_path)
+    
+    # Clone the repository into the folder
     git.Repo.clone_from(github_url, folder_path)
 
 if __name__ == "__main__":
@@ -65,13 +85,22 @@ if __name__ == "__main__":
     folder_path = "repo"
     prompt_path = "project_prompt.md"
     mermaid_output_path = "output/system_diagram.mmd"
-    google_api_key = "YOUR_GOOGLE_API_KEY"
+    google_api_key = input("YOUR_GOOGLE_API_KEY")
 
     # Clone the repository
-    clone_repository(github_url, folder_path)
+    try:
+        clone_repository(github_url, folder_path)
 
-    # Generate the prompt using code2prompt
-    generate_prompt(folder_path, prompt_path)
+        # Generate the prompt using code2prompt
+        generate_prompt(folder_path, prompt_path)
 
-    # Generate the Mermaid diagram using Gemini
-    generate_mermaid_diagram(prompt_path, google_api_key, mermaid_output_path)
+        # Generate the Mermaid diagram using Gemini
+        generate_mermaid_diagram(prompt_path, google_api_key, mermaid_output_path)
+
+        mermaid_code = extract_mermaid_from_markdown(mermaid_output_path)
+
+        output_path = "codebase_diagram.png"  # or .svg for SVG format
+
+        mermaid_to_image(mermaid_code, output_path)
+    except Exception as e:
+        print(f"Error: {str(e)}")
