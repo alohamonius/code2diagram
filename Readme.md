@@ -10,7 +10,7 @@ This project generates a Mermaid diagram of a system based on the structure of a
 ## How to Use
 
 0. Get API key in [GoogleAI Studio](https://aistudio.google.com/)
-1. Open this project in [Gitpod](https://gitpod.io/start/#alohamonius-code2diagra-6q2sqo672kd).
+1. Open this project in [Gitpod](https://alohamonius-code2diagra-bsm8au96krd.ws-eu117.gitpod.io/).
 2. When prompted, enter the URL of a GitHub repository / API key / Attempts.
 3. The repository will be cloned, the prompt will be generated, and the Mermaid diagram will be saved to `output/codebase_diagram*.png`.
 
