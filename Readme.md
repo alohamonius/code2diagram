@@ -1,6 +1,10 @@
-# Repo Mermaid Generator
+# GitHub Codebase Architecture Visualizer (AI Generated)
 
 This project generates a Mermaid diagram of a system based on the structure of a GitHub repository. It uses **code2prompt** to generate a prompt and **Gemini** to produce the Mermaid diagram.
+
+## Use Case
+- Quick architecture understanding
+- Deal with the old code
 
 ## How to Use
 
