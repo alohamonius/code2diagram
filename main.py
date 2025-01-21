@@ -1,3 +1,4 @@
+import os
 from utils.clone_repository import clone_repository
 from utils.generate_mermaid_diagram import generate_mermaid_diagram
 from utils.generate_prompt import generate_prompt
@@ -19,6 +20,12 @@ if __name__ == "__main__":
     "**/yarn.lock,**/package-lock.json,**/*.json,*.json"
     )
     
+    if not os.path.exists("output"):
+        os.makedirs("output")
+        print('Folder created')
+    else:
+        print('Folder already exists')
+
     clone_repository(github_url, folder_path)
     generate_prompt(folder_path,prompt_path,exclude_patterns)
 
