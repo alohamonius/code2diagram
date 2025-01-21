@@ -1,6 +1,5 @@
-from main import remove_folder
-from github import Github
 import os
+import git
 
 def clone_repository(github_url: str, folder_path: str):
     """Clone the GitHub repository to a local folder, removing the folder if it already exists."""

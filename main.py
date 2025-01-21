@@ -2,13 +2,7 @@ import os
 from utils.clone_repository import clone_repository
 from utils.generate_mermaid_diagram import generate_mermaid_diagram
 from utils.generate_prompt import generate_prompt
-import google.generativeai as genai
 from utils.mermaid import extract_mermaid_from_markdown, mermaid_to_image
-
-
-def initialize_gemini(api_key: str):
-    """Initializes the Gemini API with the provided API key."""
-    genai.configure(api_key=api_key)
 
 
 if __name__ == "__main__":
@@ -26,7 +20,7 @@ if __name__ == "__main__":
     )
     
     clone_repository(github_url, folder_path)
-    generate_prompt(folder_path,prompt_path)
+    generate_prompt(folder_path,prompt_path,exclude_patterns)
 
     for attempt in range(1, max_attempts + 1):
         try:

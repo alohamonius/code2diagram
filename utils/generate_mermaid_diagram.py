@@ -1,5 +1,8 @@
-from main import initialize_gemini
+import google.generativeai as genai
 
+def initialize_gemini(api_key: str):
+    """Initializes the Gemini API with the provided API key."""
+    genai.configure(api_key=api_key)
 
 def generate_mermaid_diagram(prompt_path: str, api_key: str, output_path: str):
     """Generate the Mermaid diagram using the prompt and Gemini API."""

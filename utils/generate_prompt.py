@@ -1,10 +1,6 @@
-from main import exclude_patterns
-
-
 import subprocess
 
-
-def generate_prompt(repo_folder: str, out:str):
+def generate_prompt(repo_folder: str, out:str,exclude_patterns:str):
     """Use code2prompt to generate a prompt from the repository's code."""
     code2prompt_command = (
     f"code2prompt --path {repo_folder} --suppress-comments "
