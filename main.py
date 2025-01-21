@@ -1,4 +1,3 @@
-import os
 from utils.clone_repository import clone_repository
 from utils.generate_mermaid_diagram import generate_mermaid_diagram
 from utils.generate_prompt import generate_prompt
@@ -6,12 +5,13 @@ from utils.mermaid import extract_mermaid_from_markdown, mermaid_to_image
 
 
 if __name__ == "__main__":
-    github_url = input("Enter the GitHub repository URL: ") #https://github.com/alohamonius/AWS_Portfolio1
     folder_path = "CLONED_REPO"
     prompt_path = "GENERATED_CODE2PROMPT_CODEBASE.md"
-    google_api_key = input("YOUR_GOOGLE_API_KEY")
+    
+    github_url = input("Enter the GitHub repository URL: ") 
+    google_api_key = input("YOUR_GOOGLE_API_KEY: ")
 
-    max_attempts = 1  # Number of times to retry
+    max_attempts = input("How many diagrams? (3+ for best results): ")
 
     exclude_patterns = (
     ".dockerignore,.eslintrc,*.md,**/.git/**,**/.vscode/**,**/.idea/**,"
